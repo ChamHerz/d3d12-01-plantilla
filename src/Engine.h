@@ -11,6 +11,7 @@
 #endif
 
 #include <windows.h>
+#include <xstring>
 
 class Engine
 {
@@ -24,9 +25,20 @@ protected:
 	virtual ~Engine();
 
 	static Engine* engine;
-	HINSTANCE engineInstance = nullptr;
+	HINSTANCE engineInstance = nullptr;			// instancia de la aplicacion
+	HWND      engineHwnd = nullptr;				// handle de la ventana principal
+
+	bool initMainWindow();
+	bool initDirectX();
+	int clientWidth = 800;
+	int clientHeight = 600;
+	std::wstring engineCaption = L"Shader Game";
 
 public:
 	static Engine* getEngine();
-};
 
+	virtual bool initialize();
+
+	int run();
+	virtual LRESULT MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+};
