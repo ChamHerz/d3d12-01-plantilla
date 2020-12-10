@@ -11,6 +11,8 @@ public:
 	ShaderGame(HINSTANCE hInstanc);
 	~ShaderGame();
 
+	virtual bool initialize() override;
+
 };
 
 int WINAPI WinMain(
@@ -22,10 +24,16 @@ int WINAPI WinMain(
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
-	return 0;
+	ShaderGame shaderGame(hInstance);
+
+	// si o si tiene que inicializar, sino algo funciono mal
+	if (!shaderGame.initialize())
+		return 0;
+
+	return shaderGame.run();
 };
 
-ShaderGame::ShaderGame(HINSTANCE hInstance): Engine(hInstance)
+ShaderGame::ShaderGame(HINSTANCE hInstance) : Engine(hInstance)
 {
 
 }
@@ -33,4 +41,12 @@ ShaderGame::ShaderGame(HINSTANCE hInstance): Engine(hInstance)
 ShaderGame::~ShaderGame()
 {
 
+}
+
+bool ShaderGame::initialize()
+{
+	if (!Engine::initialize())
+		return false;
+
+	return true;
 }
